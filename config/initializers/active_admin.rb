@@ -50,7 +50,11 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
+  # This way the url is http://host/admin/
   # config.default_namespace = :admin
+
+  # This way the url is http://host/manage/
+  config.default_namespace = :manage
   #
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
