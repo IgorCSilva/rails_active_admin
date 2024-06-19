@@ -15,6 +15,14 @@ ActiveAdmin.register Post do
   #   permitted
   # end
 
+  # menu false
+  menu label: "My Posts"
+  # menu label: proc{ I18n.t "mypost" }
+  # menu if: proc{ true }
+  menu priority: 1
+  menu parent: "Blog"
+  # menu parent: ["Blog", "Personal"]
+
   actions :index, :show, :edit
 
   filter :title

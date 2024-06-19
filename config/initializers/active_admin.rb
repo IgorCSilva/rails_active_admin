@@ -67,6 +67,24 @@ ActiveAdmin.setup do |config|
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
 
+  config.namespace :manage do |admin|
+    admin.build_menu do |menu|
+      menu.add label: "The Application", url: "/", priority: 0
+  
+      menu.add label: "Sites" do |sites|
+        sites.add label: "Google",
+                  url: "https://google.com",
+                  html_options: { target: "_blank" }
+  
+        sites.add label: "Facebook",
+                  url: "https://facebook.com"
+  
+        sites.add label: "Github",
+                  url: "https://github.com"
+      end
+    end
+  end
+
   # == User Authentication
   #
   # Active Admin will automatically call an authentication
