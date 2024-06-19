@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  active_admin:
+    build:
+      context: .
+      dockerfile: Dockerfile.project
+    container_name: active_admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
