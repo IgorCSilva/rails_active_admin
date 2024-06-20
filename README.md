@@ -1,7 +1,53 @@
 # Active Admin
 
+A rails application using the Active Admin with docker.
+
 Project created following this tutorial: https://activeadmin.info/documentation.html
 
+**Obs.:** The application name used to create this tutorial is `active_admin`. Update to your application name.
+
+
+## Docker configuration
+Set the docker-compose file:
+```yaml
+version: '3'
+
+services:
+  active_admin:
+    build:
+      context: .
+      dockerfile: Dockerfile.project
+    container_name: active_admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+
+```
+
+Set the Dockerfile.project with the following code:
+```dockerfile
+
+FROM ruby:3.3.1
+
+RUN apt-get update -yqq \
+  && apt-get install -yqq --no-install-recommends \
+  nodejs \
+  libqt5webkit5-dev \
+  && apt-get -q clean \
+  && rm -rf /var/lib/apt/lists
+
+WORKDIR /app
+COPY Gemfile* ./
+RUN bundle install
+COPY . .
+
+# Precompile assets for production
+# RUN bundle exec rake assets:precompile
+
+# Specify the command to run the application
+CMD ["rails", "server", "-b", "0.0.0.0"]
+```
 
 ## Initialization
 
@@ -17,7 +63,13 @@ group :assets do
 end
 ```
 
-After install the new gem, run the installer.
+Run the application:  
+`docker-compose up --build`
+
+Get inside the container:  
+`docker exec -it active_admin bash`
+
+Now, run the installer:
 
 - If you don’t want to use Devise, run it with --skip-users:  
 `rails g active_admin:install --skip-users`
@@ -31,14 +83,15 @@ After install the new gem, run the installer.
 Let's run:  
 `rails g active_admin:install --skip-users`
 
-Now, migrate the database:
+Now, migrate the database:  
 `rails db:migrate`
 
 You can visit the `http://localhost:3000/admin` and login with the credentials:
 - user: admin@example.com
 - password: password
 
-Generate a model:
+## Using a Model
+Generate a model:  
 `rails generate model Post title:string content:text`
 
 Run the migration:  
@@ -81,8 +134,10 @@ post.update(title: "Updated title")
 
 # Delete a post
 post.destroy
-
 ```
 
 Register a model:
 `rails generate active_admin:resource Post`
+
+## Conclusion
+You started an application and set active admin using docker. Keep learning and practicing.
